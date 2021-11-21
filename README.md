@@ -1,7 +1,7 @@
 # immortal.audit0
 immortal.farm first audit
 
-The share token referenced in eqv.sol is here: https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC20/presets/ERC20PresetMinterPauser.sol
+The share token referenced in MultiVault is a Custom modification of ERC20PresetMinterPauser
 
 ***When depositing or withdrawing from a Multivault, please increase the gas limit by 2-3% manually in metamask.
 
