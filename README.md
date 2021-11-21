@@ -3,8 +3,10 @@ immortal.farm first audit
 
 The share token referenced in eqv.sol is here: https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC20/presets/ERC20PresetMinterPauser.sol
 
+***When depositing or withdrawing from a Multivault, please increase the gas limit by 2-3% manually in metamask.
+
 In order to set up the contracts correctly you must do the following:
-1. Deploy MultiVault from eqv.sol
+1. Deploy MultiVault from stables.sol, focus.sol, duality.sol, or everything.sol
 2. Deploy ERC20PresetMinterPauser
 3. call declareShareAddress with the share address
 4. grant the MultiVault a Minter Role
