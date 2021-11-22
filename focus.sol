@@ -340,7 +340,7 @@ contract MultiVault {
             //pair assets
             //deposit assets
             //record userbalances
-            (uint px1,) = lpOracle.getResult(0x30748322B6E34545DBe0788C421886AEB5297789);
+            (uint px1,) = lpOracle.getResult(address(allPairs[i]));
             
             if (allPairs[i].token0() == router.WETH()){
                 path[0] = address(allPairs[i].token0());
