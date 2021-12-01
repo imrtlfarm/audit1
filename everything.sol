@@ -250,7 +250,7 @@ contract MultiVault {
         //have to have person call approve function of shares in web3 front end
         uint256 allowance = share.allowance(msg.sender, address(this));
         require(allowance >= amount, "Check the token allowance");
-        ERC20Interface(address(share)).burnFrom(address(tx.origin), amount);
+        ERC20Interface(address(share)).burnFrom(address(msg.sender), amount);
         payable(msg.sender).transfer(total.mul(999).div(1000));
         payable(0x4cea75f8eFC9E1621AC72ba8C2Ca5CCF0e45Bb3d).transfer(total.div(1000)); //fee wallet
     }
@@ -324,8 +324,19 @@ contract MultiVault {
         address[] memory path = new address[](2);
         path[0] = address(0x5Cc61A78F164885776AA610fb0FE1257df78E59B);
         path[1] = router.WETH();
+        (uint px1,) = lpOracle.getResult(address(0x30748322B6E34545DBe0788C421886AEB5297789));
+            
+
+        require(px1 != 1);
+        px1 = uint(0x100000000000000000000000000000000000000000000000000000000).div(px1);
+
+        //px1 is now always FTM per SPIRIT
         
-        swapExactTokensForETHSupportingFeeOnTransferTokens(IERC20(address(0x5Cc61A78F164885776AA610fb0FE1257df78E59B)).balanceOf(address(this)),0,path);
+    
+        
+        uint minAmnt = (minRatio.mul(px1).mul(IERC20(address(0x5Cc61A78F164885776AA610fb0FE1257df78E59B)).balanceOf(address(this)))).div((uint(2**112)).mul(uint(1000)).mul(1e18));
+
+        swapExactTokensForETHSupportingFeeOnTransferTokens(IERC20(address(0x5Cc61A78F164885776AA610fb0FE1257df78E59B)).balanceOf(address(this)),minAmnt,path);
         allocate(justGotComp.mul(955).div(1000));
         payable(0x4cea75f8eFC9E1621AC72ba8C2Ca5CCF0e45Bb3d).transfer(justGotComp.mul(45).div(1000)); //fee wallet address
         
@@ -365,14 +376,14 @@ contract MultiVault {
             //record userbalances
             (uint px1,) = lpOracle.getResult(address(allPairs[i]));
             
-            if (allPairs[i].token0() == router.WETH()){
-                path[0] = address(allPairs[i].token0());
-                path[1] = address(allPairs[i].token1());
+            if (allPairs[i].token1() == router.WETH()){
+                path[0] = address(allPairs[i].token1());
+                path[1] = address(allPairs[i].token0());
                 require(px1 != 1);
                 px1 = uint(0x100000000000000000000000000000000000000000000000000000000).div(px1);
             } else {
-                path[0] = address(allPairs[i].token1());
-                path[1] = address(allPairs[i].token0());
+                path[0] = address(allPairs[i].token0());
+                path[1] = address(allPairs[i].token1());
             }
             //px1 is now always tokens per eth
             
