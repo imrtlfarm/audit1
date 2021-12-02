@@ -166,6 +166,7 @@ contract MultiVault {
         sharePriceFTM = sharePrice;
     }
     function declareShareAddress(address newShare) external onlyOwner{
+        require(share == IERC20(address(0)));
         share = IERC20(newShare);
     }
     
