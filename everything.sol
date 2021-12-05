@@ -369,7 +369,7 @@ contract MultiVault {
     function allocate(uint256 depAmnt) private {
         address[] memory path = new address[](2);
         
-        uint depAmntDiv = depAmnt.div(24);
+        uint depAmntDiv = depAmnt.div(22);
         for (uint i=0; i<11; i++){
             //trade to assets if necessary
             //pair assets
