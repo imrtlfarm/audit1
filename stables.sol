@@ -105,12 +105,12 @@ contract MultiVault {
         allPairs.push(IPancakePair(address(0xB32b31DfAfbD53E310390F641C7119b5B9Ea0488)));//mim-ftm
         
         allPairs.push(IPancakePair(address(0xe7E90f5a767406efF87Fdad7EB07ef407922EC1D)));//ftm-usdc
-        allPairs.push(IPancakePair(address(0xd473Ff135305F2fC7BC82D6B6831c911eBd55ed6)));//tomb-ftm
+        //allPairs.push(IPancakePair(address(0xd473Ff135305F2fC7BC82D6B6831c911eBd55ed6)));//tomb-ftm
         
         pids.push(17);
         pids.push(30);
         pids.push(4);
-        pids.push(56);
+        //pids.push(56);
         
     }
     
@@ -144,7 +144,7 @@ contract MultiVault {
         //compound();
         
         
-        for (uint i = 0; i<4; i++) {
+        for (uint i = 0; i<3; i++) {
             (uint amount, ) = chef.userInfo(pids[i], address(this));
             uint LPP = getLPPriceFTM(address(allPairs[i]));
             
@@ -197,7 +197,7 @@ contract MultiVault {
         address[] memory path = new address[](2);
         
         uint total = 0;
-        for (uint i = 0; i<4; i++) {
+        for (uint i = 0; i<3; i++) {
             (uint deposited, ) =chef.userInfo(pids[i], address(this));
             uint pairBal = uint(1e10).mul(deposited).mul(amount).div(share.totalSupply()).div(1e10);
             chef.withdraw(pids[i], pairBal);
@@ -294,7 +294,7 @@ contract MultiVault {
             now);
     }
     function compound() external {
-        for (uint i = 0; i<4; i++) {
+        for (uint i = 0; i<3; i++) {
             chef.withdraw(pids[i], 0);
         }
         address[] memory path = new address[](2);
@@ -346,7 +346,7 @@ contract MultiVault {
         address[] memory path = new address[](2);
         
         uint depAmntDiv = depAmnt.div(8);
-        for (uint i=0; i<4; i++){
+        for (uint i=0; i<3; i++){
             //trade to assets if necessary
             //pair assets
             //deposit assets

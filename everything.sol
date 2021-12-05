@@ -105,7 +105,7 @@ contract MultiVault {
         allPairs.push(IPancakePair(address(0x9Fe4c0CE5F533e96C2b72d852f190961AD5a7bB3)));//sushi-ftm
         
         allPairs.push(IPancakePair(address(0x936D23C83c2469f6a14B9f5bEaec13879598A5aC)));//ice-ftm
-        allPairs.push(IPancakePair(address(0xd473Ff135305F2fC7BC82D6B6831c911eBd55ed6)));//tomb-ftm
+        //allPairs.push(IPancakePair(address(0xd473Ff135305F2fC7BC82D6B6831c911eBd55ed6)));//tomb-ftm
         allPairs.push(IPancakePair(address(0x2c18c39622b90318B0124eCFd6d4aC81efcC51db)));//grim-ftm
         
         allPairs.push(IPancakePair(address(0xd14Dd3c56D9bc306322d4cEa0E1C49e9dDf045D4)));//fusdt-ftm
@@ -122,7 +122,7 @@ contract MultiVault {
         pids.push(40);
         pids.push(8);
         pids.push(7);
-        pids.push(56);
+        //pids.push(56);
         pids.push(54);
         
         pids.push(17);
@@ -169,7 +169,7 @@ contract MultiVault {
         //compound();
         
         
-        for (uint i = 0; i<12; i++) {
+        for (uint i = 0; i<11; i++) {
             (uint amount, ) = chef.userInfo(pids[i], address(this));
             uint LPP = getLPPriceFTM(address(allPairs[i]));
             
@@ -222,7 +222,7 @@ contract MultiVault {
         address[] memory path = new address[](2);
         
         uint total = 0;
-        for (uint i = 0; i<12; i++) {
+        for (uint i = 0; i<11; i++) {
             (uint deposited, ) =chef.userInfo(pids[i], address(this));
             uint pairBal = uint(1e10).mul(deposited).mul(amount).div(share.totalSupply()).div(1e10);
             chef.withdraw(pids[i], pairBal);
@@ -319,7 +319,7 @@ contract MultiVault {
             now);
     }
     function compound() external {
-        for (uint i = 0; i<12; i++) {
+        for (uint i = 0; i<11; i++) {
             chef.withdraw(pids[i], 0);
         }
         address[] memory path = new address[](2);
@@ -370,7 +370,7 @@ contract MultiVault {
         address[] memory path = new address[](2);
         
         uint depAmntDiv = depAmnt.div(24);
-        for (uint i=0; i<12; i++){
+        for (uint i=0; i<11; i++){
             //trade to assets if necessary
             //pair assets
             //deposit assets
